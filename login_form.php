@@ -42,7 +42,7 @@
     <div class="form-signin bg-light">
         <form action="controller/login.php" method="POST">
             <img class="mb-4" src="https://img.freepik.com/free-vector/girl-wearing-beret-anime-character-poster_603843-2524.jpg?w=826&t=st=1665418644~exp=1665419244~hmac=5a7b995646eeb6bcb5e1bf6b9a93c02604c7943675f73e7b852903c26ec17b13" alt="" width="140">
-            <h1 class="h3 mb-3 fw-normal">Jelenkezz be tess!!!</h1>
+            <h1 class="h3 mb-3 fw-normal">Jelenkezzé be tess!!!</h1>
 
             <div class="form-floating">
                 <input type="email" class="form-control" id="floatingInput" placeholder="Neve@valami.hu" name="email" id="name">

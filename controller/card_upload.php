@@ -4,37 +4,46 @@ include 'database.php';
 $statusMsg = '';
 
 
-
+$nev = mysqli_real_escape_string($connection, $_POST['nev']);
+$leiras = mysqli_real_escape_string($connection, $_POST['leiras']);
+$targetDir = "../uploads/images/";
 $fileName = basename($_FILES["file"]["name"]);
-$targetFilePath = $targetDir . $fileName;
-$fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
-$targetDir = "uploads/";
-if(isset($_POST["submit"]) && !empty($_FILES["file"]["name"])){
-  
-    $allowTypes = array('jpg','png','jpeg','gif');
+$move = "../upload/images/".$_FILES['file']['name'];
+$fileType = pathinfo($move, PATHINFO_EXTENSION);
 
-    if(in_array($fileType, $allowTypes)){
-       
-        if(move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)){
-          
-            $insert = $db->query("INSERT into images (file_name, uploaded_on) VALUES ('".$fileName."', NOW())");
-            if($insert){
-                
-                $statusMsg = "The file ".$fileName. " has been uploaded successfully.";
+if (isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
+
+    $allowTypes = array('jpg', 'png', 'jpeg', 'gif');
 
 
-            }else{
-                $statusMsg = "File upload failed, please try again.";
+
+    if (in_array($fileType, $allowTypes)) {
+
+        if (move_uploaded_file($_FILES["file"]["tmp_name"], $move)) 
+        {
+            $query = "INSERT INTO `cards` (`nev`, `leiras`,`kep`) VALUES (?,?,?);";
+            $stmt = mysqli_stmt_init($connection);
+            if (mysqli_stmt_prepare($stmt, $query) == false) {
+                $statusMsg = "Rohadj meg";
             } 
-        }else{
-            $statusMsg = "Sorry, there was an error uploading your file.";
-        }
-    }else{
-        $statusMsg = 'Sorry, only JPG, JPEG, PNG, GIF, & PDF files are allowed to upload.';
-    }
-}else{
-    $statusMsg = 'Please select a file to upload.'}
+            else {
 
-    // Display status message
-    echo $statusMsg;
-    ?>
+                mysqli_stmt_bind_param($stmt, 'sss', $nev, $leiras, $fileName);
+                mysqli_stmt_execute($stmt);
+
+                header('location:../card_form.php');
+            }
+        } 
+        else 
+        {
+            $statusMsg = "beszoptad mert mér felkur";
+        }
+    } else {
+        $statusMsg = 'Bocsi, only JPG, JPEG, PNG, GIF';
+    }
+} else {
+    $statusMsg = 'Bocsi, Kérlek Add meg újra a filet mivel nem találtuk az elérést';
+}
+
+
+echo $statusMsg;

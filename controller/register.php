@@ -26,9 +26,9 @@ if (isset($_POST['submit'])) {
         //ha ezek közül eggyik se teljesűl akkor hasheljük a jelszót
         $hash_password = password_hash($password, PASSWORD_DEFAULT);
         //ellenőrizük hogy a statement képes e kapcsolatot létesíteni a szerverrel
-        if (mysqli_stmt_prepare($stmt, $query) == false) {
-
-        } else {
+        if (mysqli_stmt_prepare($stmt, $query) == false) 
+        {}       
+        else {
             //Feltölti az adatbázisba az adatokat
             mysqli_stmt_bind_param($stmt, 'ss', $email, $hash_password);
             mysqli_stmt_execute($stmt);
