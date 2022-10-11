@@ -1,5 +1,6 @@
 <?php require_once('header.php'); ?>
 <?php require_once 'controller/database.php';
+
 $querry = "SELECT * from cards where 1";
 $result = mysqli_query($connection, $querry);
 echo '<div class="row">';
@@ -15,6 +16,9 @@ while ($row = mysqli_fetch_assoc($result)) {
             ';
 }
 echo'</div>';
+if (isset($_SESSION['user'])) {
+    
 
-?> <a href="card.php"> <button class="w-100 btn btn-lg btn-dark">Jeletkezzé</button> </a>
-<?php require_once('footer.php'); ?>
+?> <a href="card.php"> <button class="w-100 btn btn-lg btn-dark">Jeletkezzé</button> </a><?php
+}
+require_once('footer.php'); ?>
